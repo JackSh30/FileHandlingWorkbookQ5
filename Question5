@@ -1,0 +1,80 @@
+import java.util.Scanner;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+public class Question5
+{
+  public static void main(String[] args) throws IOException
+  {
+     Scanner input =  new Scanner(System.in);
+      
+     System.out.println("1. search for a term");
+     System.out.println("2. Search for a keyword in the descriptions");
+     System.out.println("3. end");
+     System.out.println("Key in choice");
+      
+     String Choice = input.nextLine();
+     if (Choice.equals("1"))
+      {
+         System.out.println("Term?");
+         String term = input.nextLine();
+         SearchByTerm(term);
+        } else if (Choice.equals("2"))
+        {
+         System.out.println("Keyword?");
+         String keyword = input.nextLine();
+         SearchDescByKeyword(keyword);
+        } else if (Choice.equals("3"))
+        {
+         System.exit(0);   
+        }
+    
+    }
+  public static void SearchByTerm(String term) throws IOException
+  {
+      FileReader myFile = new FileReader("U:\\Computer Science\\Year 1\\FileTerms&Definitions.txt");  
+      BufferedReader br = new BufferedReader(myFile);
+      String myLine = br.readLine();
+      
+      boolean TermFound = false;
+      do {
+          if (myLine.equalsIgnoreCase(term))
+          {
+              TermFound = true;
+              System.out.println(term + " Found");
+              System.out.println(br.readLine());
+            }
+        } while ((myLine = br.readLine())!= null);
+            
+      if (TermFound == false)
+      {
+         System.out.println("TERM NOT FOUND"); 
+        }
+      myFile.close();
+    }
+  public static void SearchDescByKeyword(String keyword) throws IOException
+  {
+      FileReader myFile = new FileReader("U:\\Computer Science\\Year 1\\FileTerms&Definitions.txt");  
+      BufferedReader br = new BufferedReader(myFile);
+      String lineOne = br.readLine();
+      
+      boolean KeywordFound = false;
+      while ((lineOne = br.readLine())!= null)
+      {
+         String lineTwo = br.readLine();
+         if (lineOne.contains(keyword))
+         {
+             KeywordFound = true;
+             System.out.println(lineOne);
+             System.out.println(lineTwo);
+            }
+        }
+      
+      if (KeywordFound == false)
+      {
+         System.out.println("NO DESCRIPTIONS FOUND containing " + keyword); 
+        }
+      myFile.close();  
+    }
+}
